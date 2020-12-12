@@ -1,6 +1,6 @@
 const { Hash } = require("crypto");
 const path = require("path");
-const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
+// const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 module.exports = {
   entry: {
@@ -20,10 +20,14 @@ module.exports = {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
         use: [
           {
-            loader: "file-loader",
+            loader: "img-optimize-loader",
             options: {
+              compress: {
+                mode: "high",
+                disableOnDevelopment: true,
+              },
+              name: "[contentHash].[ext]",
               outputPath: "images",
-              name: "[hash].[ext]",
             },
           },
         ],
@@ -34,25 +38,4 @@ module.exports = {
       },
     ],
   },
-  plugins: [
-    new ImageMinimizerPlugin({
-      minimizerOptions: {
-        plugins: [
-          ["gifsicle", { interlaced: true }],
-          ["jpegtran", { progressive: true }],
-          ["optipng", { optimizationLevel: 5 }],
-          [
-            "svgo",
-            {
-              plugins: [
-                {
-                  removeViewBox: false,
-                },
-              ],
-            },
-          ],
-        ],
-      },
-    }),
-  ],
 };
