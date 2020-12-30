@@ -18,6 +18,7 @@ module.exports = {
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        include: path.resolve(__dirname, "src/asset"),
         use: [
           {
             loader: "img-optimize-loader",
@@ -34,6 +35,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
+        include: path.resolve(__dirname, "src"),
         use: ["style-loader", "css-loader"],
       },
       {
